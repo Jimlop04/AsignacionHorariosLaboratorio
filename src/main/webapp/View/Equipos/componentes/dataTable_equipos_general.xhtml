@@ -1,0 +1,100 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <div class="p-grid ui-fluid">
+        <div class="p-col-12">
+            <div class="card" style="margin-top: 0px;">
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton
+                            value="Nuevo equipo"
+                            styleClass="rounded-button" 
+                            icon="pi pi-plus"
+                            process="@this"
+                            onclick="#{equipoMB.setAccion('Registrar')}"
+                            oncomplete="PF('modalNuevoEquipo').show()"/>
+                    </p:toolbarGroup>
+                </p:toolbar>
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <div class="p-grid p-justify-around">
+                            <p:dataTable
+                                id="dataEquipos"
+                                emptyMessage="No se encontraron registros"
+                                value="#{equipoMB.listaEquipos}"
+                                var="equipo"
+                                paginator="true"
+                                widgetVar="dataEquiposWV"
+                                paginatorPosition="bottom"
+                                stripedRows="true">
+                                <!--HEADER - DATATABLE-->
+
+                                <!--CODIGO DEL BIEN-->
+                                <p:column headerText="Código"   filterBy="#{equipo.codigo}" filterMatchMode="contains">
+                                    <p:outputLabel value="#{equipo.codigo}"/>
+                                </p:column>
+                                <!--CATEGORIA-->
+                                <p:column headerText="Categoria"  filterBy="#{equipo.categoriaEquipo.nombre}" filterMatchMode="contains">
+                                    <p:outputLabel value="#{equipo.categoriaEquipo.nombre}"/>
+                                </p:column>
+                                <!--DESCRIPCION-->
+                                <p:column colspan="2" headerText="Descripción" filterBy="#{equipo.descripcion}" filterMatchMode="contains">
+                                    <p:outputLabel value="#{equipo.descripcion}"/>
+                                </p:column>
+                                <!--MARCA-->
+                                <p:column headerText="Marca" filterBy="#{equipo.marca}" filterMatchMode="contains">
+                                    <p:outputLabel value="#{equipo.marca}"/>
+                                </p:column>
+                                <!--MODELO-->
+                                <p:column headerText="Modelo" filterBy="#{equipo.modelo}" filterMatchMode="contains">
+                                    <p:outputLabel value="#{equipo.modelo}"/>
+                                </p:column>
+                                <!--NUMERO DE SERIE-->
+                                <p:column headerText="N° serie" filterBy="#{equipo.numeroSerie}" filterMatchMode="contains">
+                                    <p:outputLabel value="#{equipo.numeroSerie}"/>
+                                </p:column>
+                                <!--FECHA - ADQUISICIÓN-->
+                                <p:column headerText="F. adquisición" filterBy="#{equipo.fechaAdquisicion}" filterMatchMode="contains">
+                                    <p:outputLabel value="#{equipo.fechaAdquisicion}"/>
+                                </p:column>
+                                <!--AREA-->
+                                <p:column resizable="true" headerText="Área"  filterBy="#{equipo.areaAula.nombre}" filterMatchMode="contains">
+                                    <p:outputLabel value="#{equipo.areaAula.nombre}"/>
+                                </p:column>
+
+                                <!--ESTADO-->
+                                <p:column colspan="1" headerText="Estado" sortBy="#{equipo.estado}" filterBy="#{equipo.estado}" filterMatchMode="contains">
+                                    <p:tag severity="success" value="BUENO"
+                                           style="font-size:12px;"
+                                           rendered="#{equipo.estado.trim() eq 'BUENO'}"/>
+                                    <p:tag severity="danger" value="DAÑADO"
+                                           style="font-size:12px;"
+                                           rendered="#{equipo.estado.trim() eq 'DAÑADO'}"/>
+                                </p:column>
+
+                                <!--ACCIONES-->
+                                <p:column  headerText="Acciones">
+                                    <p:commandButton 
+                                        icon="pi pi-pencil" 
+                                        class="ui-button-primary rounded-button p-mr-2 p-mb-2"
+                                        onclick="#{equipoMB.setAccion('Modificar')}"
+                                        actionListener="#{equipoMB.equipoByID(equipo)}"
+                                        oncomplete="PF('modalNuevoEquipo').show()"
+                                        process="@this"
+                                        update=":formRegistro">
+                                    </p:commandButton>
+                                </p:column>
+
+
+
+                            </p:dataTable>
+                        </div>
+                    </p:toolbarGroup>
+                </p:toolbar>
+            </div>
+        </div>
+    </div>
+</ui:composition>

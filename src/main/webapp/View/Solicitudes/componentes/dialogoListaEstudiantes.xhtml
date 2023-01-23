@@ -1,0 +1,82 @@
+<ui:composition
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <div class="p-grid ui-fluid">
+        <p:dialog header="Seleccionar Estudiantes" showEffect="fade" modal="true"
+                  widgetVar="listaEstudiantesElegir" responsive="true" width="75%"
+                  draggable="false" height="500">
+
+            <p:outputPanel id="listaEstudiantesElegir" class="ui-fluid">
+                <p:outputPanel>
+                    <div class="p-grid p-justify-around">
+                        <div class="p-col-11">
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p:dataTable id="dtEstudiantesagregar" reflow="true"
+                                                 widgetVar="tablabuscarestudiantes"
+                                                 lazy="true"
+                                                 paginatorPosition="bottom" 
+                                                 value="#{solicitudesMB.listaPersona}" 
+                                                 editInitEvent="dblclick" editMode="cell"
+                                                 var="TablaEstudiantes">
+                                        <f:facet name="header">
+                                            <div class="p-grid">
+                                                <div class="p-col-6">
+                                                    <p:outputLabel value="Estudiante:"></p:outputLabel>
+                                                    <p:inputText id="globalFilter"
+                                                                 onkeyup="PF('tablabuscarestudiantes').filter()"
+                                                                 placeholder="Buscar" ></p:inputText>
+                                                </div>
+                                            </div>
+                                        </f:facet>
+                                        <p:column headerText="Acciones">
+                                            <p:selectBooleanCheckbox value="#{TablaEstudiantes.verifica}">
+                                                <p:ajax 
+                                                    event="change"
+                                                    listener="#{solicitudesMB.addPersonaEstudiante(TablaEstudiantes)}"
+                                                    />
+                                            </p:selectBooleanCheckbox>
+
+                                        </p:column>
+                                        <p:column headerText="Cedula" filterStyle="display : none">
+                                            <h:outputText value="#{TablaEstudiantes.dni}"  />
+                                        </p:column>
+                                        <p:column headerText="Alumnno" filterStyle="display : none">
+                                            <h:outputText value="#{TablaEstudiantes.nombre}
+                                                          #{TablaEstudiantes.apellido}" />
+                                        </p:column>
+                                        <p:column headerText="Genero" filterStyle="display : none">
+                                            <h:outputText value="#{TablaEstudiantes.genero}" />
+                                        </p:column>                                      
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                            <!-- Botones Guardar/Cerrar -->
+                            <div class="p-grid p-justify-end">
+                                <div class="p-col-2">
+                                    <p:commandButton value="Confirmar"  
+                                                     icon="pi pi-check" 
+                                                     actionListener="#{solicitudesMB.llenaProductoConfirmado()}"
+                                                     styleClass="ui-button-primary"
+                                                     update=":form-SE:TablaestudiantesSolicitud :msgs"
+                                                     process=":dialogEstudiante:listaEstudiantesElegir @this"
+                                                     oncomplete="PF('listaEstudiantesElegir').hide()"/>
+                                </div>
+                                <div class="p-col-2">
+                                    <p:commandButton value="Cerrar" icon="pi pi-times"
+                                                     styleClass="ui-button-danger" process="@this"
+                                                     oncomplete="PF('listaEstudiantesElegir').hide()"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </p:outputPanel>
+            </p:outputPanel>
+        </p:dialog>
+
+
+    </div>
+</ui:composition>

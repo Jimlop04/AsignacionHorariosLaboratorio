@@ -1,0 +1,98 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:body>
+
+        <ui:composition template="../../WEB-INF/InicioTemplate.xhtml">
+            <ui:define name="title">Registrar Averia de equipo</ui:define>
+            <ui:define name="content">
+
+                <!--            <f:event type="preRenderView" listener=""/>-->
+                <!--            <f:event type="preRenderView" listener=""/>-->
+                <f:event type="preRenderView" listener="#{generalMB.listarLaboratoriosByEncargadoId(loginMB.httpSession.getAttribute('idPersona'))}"/>
+                <f:event type="preRenderView" listener="#{averiaEquipoMB.asignarIdEncargadoLaboratorio(loginMB.httpSession.getAttribute('idUsuarioRol'))}"/>
+                <f:event type="preRenderView" listener="#{averiaEquipoMB.listar(loginMB.httpSession.getAttribute('idPersona'))}"/>
+                <!--MENU TOOLBAR-->
+                <ui:include src="./componentes/toolbar_menu.xhtml"/>
+                <p:growl id="msj" showDetail="true"/>
+
+                <!--FORM NUEVA AVERÍA-->
+                <h:form id="formAveria">
+                    <ui:include src="./componentes/modal_nueva_averia.xhtml"/>
+                </h:form>
+
+                <!--DETALLE-->
+                <h:form id="formDataAverias">
+                    <div class="card p-mt-0">
+                        <p:outputPanel id="manage-averias-Detalle" class="ui-fluid">
+                            <div class="p-field p-col-12 p-md-12">
+                                <!--BOTON - NUEVA AVERÍA-->
+                                <p:toolbar>
+                                    <p:toolbarGroup>
+                                        <p:commandButton
+                                            value="Nueva avería"
+                                            styleClass="rounded-button" 
+                                            icon="pi pi-plus"
+                                            process="@this"
+                                            oncomplete="PF('modalNuevaAveria').show()"/>
+                                    </p:toolbarGroup>
+                                </p:toolbar>
+                                <p:fieldset>
+                                    <p:dataTable
+                                        id="dataAverias"
+                                        lazy="true"
+                                        editable="true"
+                                        reflow="true"
+                                        editInitEvent="dblclick"
+                                        editMode="cell"
+                                        value="#{averiaEquipoMB.listaAverias}"
+                                        var="av">
+                                        <!-- Header DataTable-->
+                                        <f:facet name="header">
+                                            <div class="p-d-flex p-jc-between p-ai-center">
+                                                <span style="font-size: 24px">REPORTES DE AVERÍAS</span>
+                                                <span class="filter-container ui-input-icon-left">
+                                                    <i class="pi pi-search"/>
+                                                    <p:inputText placeholder="Buscar ingrese código"/>
+                                                </span>
+                                            </div>
+                                        </f:facet>
+                                        <p:column headerText="Codigo de reporte" filterStyle="display : none">
+                                            <p:outputLabel value="#{av.idAveria}"/>
+                                        </p:column>
+                                        <p:column headerText="Fecha registro" filterStyle="display : none">
+                                            <p:outputLabel value="#{av.fechaRegistro}"/>
+                                        </p:column>
+                                        <p:column headerText="Laboratorio" filterStyle="display : none">
+                                            <p:outputLabel value="#{av.equipo.areaAula.nombre_laboratorio}"/>
+                                        </p:column>
+                                        <p:column headerText="Área" filterStyle="display : none">
+                                            <p:outputLabel value="#{av.equipo.areaAula.nombre}"/>
+                                        </p:column>
+                                        <p:column headerText="Técnico" filterStyle="display : none">
+                                            <p:outputLabel value="#{av.encargado}"/>
+                                        </p:column>
+                                        <p:column headerText="Avería" filterStyle="display : none">
+                                            <p:outputLabel value="#{av.tipoDanio} - #{av.descripcion}" />
+                                        </p:column>
+                                        <p:column headerText="Equipo" filterStyle="display : none">
+                                            <p:outputLabel value="#{av.equipo.categoriaEquipo.nombre} - #{av.equipo.descripcion}"/>
+                                        </p:column>
+                                        <p:column headerText="Codigo del bien" filterStyle="display : none">
+                                            <p:outputLabel value="#{av.equipo.codigo}"/>
+                                        </p:column>
+                                        <p:column headerText="Acciones" filterStyle="display : none">  
+                                            <p:commandButton ajax="false"  icon="pi pi-file-pdf" styleClass="rounded-button ui-button-warning"  actionListener="#{averiaEquipoMB.printPDF(av)}" />
+                                        </p:column>
+                                    </p:dataTable>
+                                </p:fieldset>
+                            </div>
+                        </p:outputPanel>
+                    </div>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

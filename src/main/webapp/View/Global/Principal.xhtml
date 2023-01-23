@@ -1,0 +1,149 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+                template="/WEB-INF/InicioTemplate.xhtml"
+>
+
+    <ui:define name="title">Laboratorio UTEQ - Inicio</ui:define>
+    <ui:define name="content">
+        <div>
+            <div id="nonAjaxLoad">
+                <p:graphicImage style="
+                                width: 60px;
+                                height: 60px;"
+                                name="ajax-document-loader.gif"
+                                library="Images"/>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $('#nonAjaxLoad').hide();
+            });
+
+            $(window).bind('beforeunload', function () {
+                $('#nonAjaxLoad').show();
+            });
+        </script>
+
+
+        <div class="container" style="background-color: #f2f2f7">
+
+            <div class="p-grid">
+
+                <!--Equipos-->
+                <ui:fragment>
+
+                    <div class="p-col-12 p-lg-6 p-xl-3">
+                        <a href="../Equipos/registroEquipos.xhtml">
+                            <div class="card-box bg-blue">
+                                <div class="inner">
+                                    <h3> Equipos </h3>
+                                    <p>Administrar Equipos</p>
+                                </div>
+                                <div class="icon">
+                                    <i>
+                                        <p:graphicImage class="imagenes" name="asistencias.png" library="Images"/>
+                                    </i>
+                                </div>
+                                <div class="card-box-footer">Ingresar
+                                    <i class="pi pi-arrow-circle-right"/>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ui:fragment>
+                <!--Solicitudes-->
+                <ui:fragment>
+                    <div class="p-col-12 p-lg-6 p-xl-3">
+                        <a href="../Solicitudes/ModuloSolicitudes.xhtml">
+                            <div class="card-box bg-blue">
+                                <div class="inner">
+                                    <h3> Solicitudes</h3>
+                                    <p>Generar solicitudes</p>
+                                </div>
+                                <div class="icon">
+                                    <i>
+                                        <p:graphicImage class="imagenes" name="blackboard.png" library="Images"/>
+                                    </i>
+                                </div>
+                                <div class="card-box-footer">Ingresar
+                                    <i class="pi pi-arrow-circle-right"/>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ui:fragment>
+                <!--Laboratorio-->
+                <ui:fragment>
+                    <div class="p-col-12 p-lg-6 p-xl-3">
+                        <a href="../Laboratorios/RegistrarLaboratorios.xhtml">
+                            <div class="card-box bg-blue">
+                                <div class="inner">
+                                    <h3> Laboratorios</h3>
+                                    <p>Lista y registro de laboratorios</p>
+                                </div>
+                                <div class="icon">
+                                    <i>
+                                        <p:graphicImage class="imagenes" name="Laboratorios.png" library="Images"/>
+                                    </i>
+                                </div>
+                                <div class="card-box-footer">Ingresar
+                                    <i class="pi pi-arrow-circle-right"/>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ui:fragment>
+                <!--Ajustes de perfil-->
+                <ui:fragment>
+                    <div class="p-col-12 p-lg-6 p-xl-3">
+                        <a href="../Ajustes/ajustesPerfl.xhtml">
+                            <div class="card-box bg-blue">
+                                <div class="inner">
+                                    <h3>Ajustes de Perfil</h3>
+                                    <p>Ajustar informacion de Perfil</p>
+                                </div>
+                                <div class="icon">
+                                    <i>
+                                        <p:graphicImage class="imagenes" name="hojavida.png" library="Images"/>
+                                    </i>
+                                </div>
+                                <div class="card-box-footer">Ingresar
+                                    <i class="pi pi-arrow-circle-right"/>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ui:fragment>
+                <!--Administracion-->
+                <ui:fragment>
+                    <div class="p-col-12 p-lg-6 p-xl-3">
+                        <a href="../Administracion/Docentes.xhtml">
+                            <div class="card-box bg-blue">
+                                <div class="inner">
+                                    <h3> Administracion</h3>
+                                    <p>Asignacion de cargos</p>
+                                </div>
+                                <div class="icon">
+                                    <i>
+                                        <p:graphicImage class="imagenes" name="matriculaciononline.png"
+                                                        library="Images"/>
+                                    </i>
+                                </div>
+                                <div class="card-box-footer">Ingresar
+                                    <i class="pi pi-arrow-circle-right"/>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </ui:fragment>
+            </div>
+        </div>
+        <h:outputStylesheet name="home.css" library="css"/>
+    </ui:define>
+
+</ui:composition>
+
